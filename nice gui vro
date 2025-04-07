@@ -1,0 +1,656 @@
+getgenv().Config = {
+	Invite = "Skidding.LOL",
+	Version = "3.9",
+}
+
+getgenv().luaguardvars = {
+	DiscordName = "Bioteste make it",
+}
+
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/drillygzzly/Other/main/1"))()
+local ESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/linemaster2/esp-library/main/library.lua"))()
+library:init()
+
+local Window = library.NewWindow({
+	title = "Skidding.lol | Criminality",
+	size = UDim2.new(0, 525, 0, 650)
+})
+
+local tabs = {
+    Tab1 = Window:AddTab("Tab1"),
+	Settings = library:CreateSettingsTab(Window),
+}
+
+local sections = {
+    Section1 = tabs.Tab1:AddSection("Exploit", 1),
+	Section2 = tabs.Tab1:AddSection("TriggerBot", 2),
+	ESP = tabs.Tab1:AddSection("Wall Hack", 1),
+	Aimbot = tabs.Tab1:AddSection("Aimbot", 2),
+}
+
+sections.Section1:AddButton({
+	text = "Lockpick Exploit",
+	flag = "Button_1",
+	tooltip = "Big HitBox For LockPicks",
+	risky = true,
+	confirm = true,
+	callback = function(v) 
+		function checkLockpick(...)
+			local frames = { ... }
+			for i,v in pairs(frames) do
+				v.Parent.UIScale.Scale = 10
+				if (v.AbsolutePosition.Y >= 450 and v.AbsolutePosition.Y <= 550) then
+					mouse1click(); task.wait(0.1); mouse1release();
+				end
+			end
+		end
+
+		while true do task.wait()
+			local pgui = game.Players.LocalPlayer:WaitForChild"PlayerGui"
+			local lpgui = pgui:FindFirstChild'LockpickGUI';
+			if (lpgui) then
+				local B1 = lpgui.MF.LP_Frame.Frames.B1.Bar.Selection;
+				local B2 = lpgui.MF.LP_Frame.Frames.B2.Bar.Selection;
+				local B3 = lpgui.MF.LP_Frame.Frames.B3.Bar.Selection;
+				checkLockpick(B1, B2, B3)
+			end
+		end
+	end
+})
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local UIS = game:GetService("UserInputService")
+local plr = Players.LocalPlayer
+
+local fly_enabled = false
+local fly_speed = 50
+local fly_conn
+local spin_conn
+local spin_speed = 2
+local spin_enabled = false
+
+local keys = {
+	W = false,
+	A = false,
+	S = false,
+	D = false,
+	Space = false,
+	LeftControl = false
+}
+
+-- 🛸 FLY FUNCTION
+local function startFly()
+	local char = plr.Character or plr.CharacterAdded:Wait()
+	local hrp = char:WaitForChild("HumanoidRootPart")
+	local hum = char:WaitForChild("Humanoid")
+
+	hum.PlatformStand = true
+
+	fly_conn = RunService.RenderStepped:Connect(function()
+		local move = Vector3.zero
+		local cam = workspace.CurrentCamera.CFrame
+
+		if keys.W then move += cam.LookVector end
+		if keys.S then move -= cam.LookVector end
+		if keys.A then move -= cam.RightVector end
+		if keys.D then move += cam.RightVector end
+		if keys.Space then move += cam.UpVector end
+		if keys.LeftControl then move -= cam.UpVector end
+
+		hrp.Velocity = move.Unit * fly_speed
+	end)
+end
+
+local function stopFly()
+	local char = plr.Character
+	if not char then return end
+	local hum = char:FindFirstChild("Humanoid")
+	if hum then
+		hum.PlatformStand = false
+	end
+	if fly_conn then fly_conn:Disconnect() fly_conn = nil end
+end
+
+--  SPINBOT FUNCTION
+local function startSpin()
+	local char = plr.Character or plr.CharacterAdded:Wait()
+	local hrp = char:WaitForChild("HumanoidRootPart")
+	local hum = char:WaitForChild("Humanoid")
+	hum.AutoRotate = false
+
+	spin_conn = RunService.RenderStepped:Connect(function(dt)
+		hrp.CFrame = hrp.CFrame * CFrame.Angles(0, math.rad(spin_speed), 0)
+	end)
+end
+
+local function stopSpin()
+	local char = plr.Character
+	if not char then return end
+	local hum = char:FindFirstChild("Humanoid")
+	if hum then
+		hum.AutoRotate = true
+	end
+	if spin_conn then spin_conn:Disconnect() spin_conn = nil end
+end
+
+-- 🎮 Input Handling
+UIS.InputBegan:Connect(function(input, gpe)
+	if gpe then return end
+	if input.KeyCode == Enum.KeyCode.W then keys.W = true end
+	if input.KeyCode == Enum.KeyCode.A then keys.A = true end
+	if input.KeyCode == Enum.KeyCode.S then keys.S = true end
+	if input.KeyCode == Enum.KeyCode.D then keys.D = true end
+	if input.KeyCode == Enum.KeyCode.Space then keys.Space = true end
+	if input.KeyCode == Enum.KeyCode.LeftControl then keys.LeftControl = true end
+end)
+
+UIS.InputEnded:Connect(function(input)
+	if input.KeyCode == Enum.KeyCode.W then keys.W = false end
+	if input.KeyCode == Enum.KeyCode.A then keys.A = false end
+	if input.KeyCode == Enum.KeyCode.S then keys.S = false end
+	if input.KeyCode == Enum.KeyCode.D then keys.D = false end
+	if input.KeyCode == Enum.KeyCode.Space then keys.Space = false end
+	if input.KeyCode == Enum.KeyCode.LeftControl then keys.LeftControl = false end
+end)
+
+-- 📋 UI (Usa tua framework ou Lib aqui)
+
+sections.Section1:AddToggle({
+	text = "Spinbot ",
+	flag = "spinbot_toggle",
+	callback = function(state)
+		spin_enabled = state
+		if state then startSpin() else stopSpin() end
+	end
+})
+
+sections.Section1:AddSlider({
+	text = "Spin Speed ",
+	flag = "spin_speed",
+	value = 2,
+	min = 0.1,
+	max = 20,
+	decimals = 1,
+	callback = function(val)
+		spin_speed = val
+	end
+})
+
+sections.Section1:AddToggle({
+	text = "Fly Mode ",
+	flag = "fly_toggle",
+	callback = function(state)
+		fly_enabled = state
+		if state then startFly() else stopFly() end
+	end
+})
+
+sections.Section1:AddSlider({
+	text = "Fly Speed ",
+	flag = "fly_speed",
+	value = 50,
+	min = 10,
+	max = 50,
+	decimals = 0,
+	callback = function(val)
+		fly_speed = val
+	end
+})
+
+sections.Section1:AddToggle({
+	enabled = true,
+	text = "Infinite Stamina",
+	flag = "Toggle_InfStamina",
+	tooltip = "",
+	risky = true,
+	callback = function(state)
+		getgenv().infstamina = state
+		local oldStamina
+		local hookDone = false
+
+		function InfStamina()
+		    if hookDone then return end
+		    hookDone = true
+
+		    local success, func = pcall(function()
+		        return getupvalue(getrenv()._G.S_Take, 2)
+		    end)
+
+		    if not success or type(func) ~= "function" then
+		        return
+		    end
+
+		    oldStamina = hookfunction(func, function(v1, ...)
+		        if getgenv().infstamina then
+		            v1 = 0
+		        end
+		        return oldStamina(v1, ...)
+		    end)
+		end
+
+		InfStamina()
+	end
+})
+
+
+sections.Section1:AddButton({
+	enabled = true,
+	text = "Wallbang",
+	flag = "Button_1",
+	tooltip = "You can shoot in the walls",
+	risky = true,
+	confirm = true, -- shows confirm button
+	callback = function(v)
+	    game:service[[Workspace]]:FindFirstChild('Map'):FindFirstChild('Parts'):FindFirstChild('M_Parts').Parent =
+game:service[[Workspace]]:FindFirstChild('Characters')
+	end
+})
+
+sections.Section1:AddButton({
+	enabled = true,
+	text = "FallDamage",
+	flag = "Button_DeleteEvent",
+	tooltip = "",
+	risky = false,
+	confirm = true,
+	callback = function()
+	    local event = game:GetService("ReplicatedStorage"):FindFirstChild("Events")
+	    if event then
+	        local target = event:FindFirstChild("__DFfDD")
+	        if target then
+	            target:Destroy()
+	        end
+	    end
+	end
+})
+
+local autoReloadConnection
+
+local autoReloadConnection
+
+sections.Section1:AddToggle({
+	enabled = true,
+	text = "Auto reload",
+	flag = "Toggle_AutoReload",
+	tooltip = "",
+	risky = true,
+	callback = function(state)
+	    if state then
+	        autoReloadConnection = game:GetService("RunService").RenderStepped:Connect(function()
+	            local args = {
+	                [1] = 1744024312.0039155,
+	                [2] = "KLWE89U0",
+	                [3] = game:GetService("Players").LocalPlayer.Character:FindFirstChild("AKS-74U")
+	            }
+
+	            game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("GNX_R"):FireServer(unpack(args))
+	        end)
+	    else
+	        if autoReloadConnection then
+	            autoReloadConnection:Disconnect()
+	            autoReloadConnection = nil
+	        end
+	    end
+	end
+})
+local arms = {
+	workspace.Camera.ViewModel:WaitForChild("Left Arm"),
+	workspace.Camera.ViewModel:WaitForChild("Right Arm")
+}
+
+local selectedMaterial = Enum.Material.Plastic
+local selectedColor = Color3.new(1, 1, 1)
+
+-- LISTA DE MATERIAIS
+sections.Section1:AddList({
+	enabled = true,
+	text = "Material",
+	flag = "List_Material",
+	multi = false,
+	tooltip = "",
+	value = "Plastic",
+	values = {
+		"Plastic",
+		"Neon",
+		"ForceField",
+		"SmoothPlastic",
+		"Wood"
+	},
+	callback = function(material)
+		selectedMaterial = Enum.Material[material]
+	end
+})
+
+-- COLOR PICKER
+sections.Section1:AddColor({
+	enabled = true,
+	text = "Arm Color",
+	flag = "Color_Arms",
+	tooltip = "",
+	color = Color3.new(1, 1, 1),
+	trans = 0,
+	open = false,
+	callback = function(color)
+		selectedColor = color
+	end
+})
+
+-- BOTÃO FINAL
+sections.Section1:AddButton({
+	enabled = true,
+	text = "Apply Material + Color",
+	flag = "Button_ApplyArmMod",
+	tooltip = "",
+	risky = false,
+	confirm = false,
+	callback = function()
+		for _, arm in ipairs(arms) do
+			if arm and arm:IsA("BasePart") then
+				arm.Color = selectedColor
+				arm.Material = selectedMaterial
+			end
+		end
+	end
+})
+
+
+
+
+
+library:SendNotification("Thanks for use Skidding.lol", 3, Color3.new(255, 0, 0))
+
+ESP.Enabled = false
+ESP.ShowBox = false
+ESP.ShowName = false
+ESP.ShowHealth = false
+ESP.ShowTracer = false
+ESP.ShowDistance = false
+
+ESP.Settings = {
+	BoxOutlineColor = Color3.new(0, 0, 0),
+	BoxColor = Color3.new(1, 1, 1),
+	NameColor = Color3.new(1, 1, 1),
+	HealthOutlineColor = Color3.new(0, 0, 0),
+	HealthHighColor = Color3.new(0, 1, 0),
+	HealthLowColor = Color3.new(1, 0, 0),
+	TracerColor = Color3.new(1, 1, 1),
+	TracerThickness = 2,
+	TracerPosition = "Bottom"
+}
+
+sections.ESP:AddToggle({ text = "Enabled ESP", flag = "ESP_Enabled", callback = function(val) ESP.Enabled = val end })
+sections.ESP:AddToggle({ text = "Box", flag = "ESP_Box", callback = function(val) ESP.ShowBox = val end })
+sections.ESP:AddToggle({ text = "Name", flag = "ESP_Name", callback = function(val) ESP.ShowName = val end })
+sections.ESP:AddToggle({ text = "Health", flag = "ESP_Health", callback = function(val) ESP.ShowHealth = val end })
+sections.ESP:AddToggle({ text = "Tracer", flag = "ESP_Tracer", callback = function(val) ESP.ShowTracer = val end })
+sections.ESP:AddToggle({ text = "Distance", flag = "ESP_Distance", callback = function(val) ESP.ShowDistance = val end })
+
+game:GetService("RunService").RenderStepped:Connect(function()
+	if not ESP.Enabled then return end
+end)
+
+-- Aimbot Setup
+local Vector2 = Vector2
+local mousemoverel = mousemoverel or (Input and Input.MouseMove)
+local Aimbot = {}
+getgenv().Aimbot = Aimbot
+
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local TweenService = game:GetService("TweenService")
+local Players = game:GetService("Players")
+local Camera = workspace.CurrentCamera
+local LocalPlayer = Players.LocalPlayer
+
+local RequiredDistance, Typing, Running, Animation, ServiceConnections = 2000, false, false, nil, {}
+
+Aimbot.Settings = {
+    Enabled = false,
+    TeamCheck = false,
+    AliveCheck = false,
+    WallCheck = false,
+    Sensitivity = 0,
+    ThirdPerson = false,
+    ThirdPersonSensitivity = 3,
+    TriggerKey = "MouseButton2",
+    Toggle = false,
+    LockPart = "Head",
+    PredictionFactor = 0
+}
+
+Aimbot.FOVSettings = {
+    Enabled = true,
+    Visible = true,
+    Amount = 50,
+    Color = Color3.fromRGB(255, 255, 255),
+    LockedColor = Color3.fromRGB(255, 70, 70),
+    Transparency = 0.5,
+    Sides = 60,
+    Thickness = 1,
+    Filled = false
+}
+
+Aimbot.FOVCircle = Drawing.new("Circle")
+Aimbot.FOVCircle.Transparency = 0.5
+Aimbot.FOVCircle.Visible = true
+Aimbot.FOVCircle.Thickness = 1
+Aimbot.FOVCircle.Filled = false
+
+local function CancelLock()
+	Aimbot.Locked = nil
+	if Animation then Animation:Cancel() end
+	Aimbot.FOVCircle.Color = Aimbot.FOVSettings.Color
+end
+
+local function PredictTargetPosition(target)
+	local head = target.Character:FindFirstChild(Aimbot.Settings.LockPart)
+	local root = target.Character:FindFirstChild("HumanoidRootPart")
+	if head and root then
+		local velocity = root.Velocity
+		local predictedPos = head.Position + (velocity * Aimbot.Settings.PredictionFactor / 10)
+		return predictedPos
+	end
+end
+
+local function GetClosestPlayer()
+	if not Aimbot.Locked then
+		RequiredDistance = Aimbot.FOVSettings.Amount
+		for _, v in next, Players:GetPlayers() do
+			if v ~= LocalPlayer and v.Character and v.Character:FindFirstChild(Aimbot.Settings.LockPart) then
+				local humanoid = v.Character:FindFirstChildOfClass("Humanoid")
+				if not humanoid or humanoid.Health <= 0 then continue end
+				if Aimbot.Settings.TeamCheck and v.Team == LocalPlayer.Team then continue end
+				if Aimbot.Settings.WallCheck and #(Camera:GetPartsObscuringTarget({v.Character[Aimbot.Settings.LockPart].Position}, v.Character:GetDescendants())) > 0 then continue end
+				local predictedPos = PredictTargetPosition(v)
+				if predictedPos then
+					local Vector, OnScreen = Camera:WorldToViewportPoint(predictedPos)
+					local Distance = (Vector2.new(UserInputService:GetMouseLocation().X, UserInputService:GetMouseLocation().Y) - Vector2.new(Vector.X, Vector.Y)).Magnitude
+					if Distance < RequiredDistance and OnScreen then
+						RequiredDistance = Distance
+						Aimbot.Locked = v
+					end
+				end
+			end
+		end
+	else
+		local predictedPos = PredictTargetPosition(Aimbot.Locked)
+		if not predictedPos then return end
+		local screenPos = Camera:WorldToViewportPoint(predictedPos)
+		if (Vector2.new(UserInputService:GetMouseLocation().X, UserInputService:GetMouseLocation().Y) - Vector2.new(screenPos.X, screenPos.Y)).Magnitude > RequiredDistance then
+			CancelLock()
+		end
+	end
+end
+
+local function AimAtTarget()
+	if Aimbot.Locked and Aimbot.Locked.Character then
+		local predictedPos = PredictTargetPosition(Aimbot.Locked)
+		if not predictedPos then return end
+		if Aimbot.Settings.ThirdPerson then
+			local Vector = Camera:WorldToViewportPoint(predictedPos)
+			mousemoverel((Vector.X - UserInputService:GetMouseLocation().X) * Aimbot.Settings.ThirdPersonSensitivity,
+				(Vector.Y - UserInputService:GetMouseLocation().Y) * Aimbot.Settings.ThirdPersonSensitivity)
+		else
+			if Aimbot.Settings.Sensitivity > 0 then
+				Animation = TweenService:Create(Camera, TweenInfo.new(Aimbot.Settings.Sensitivity, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {CFrame = CFrame.new(Camera.CFrame.Position, predictedPos)})
+				Animation:Play()
+			else
+				Camera.CFrame = CFrame.new(Camera.CFrame.Position, predictedPos)
+			end
+		end
+		Aimbot.FOVCircle.Color = Aimbot.FOVSettings.LockedColor
+	end
+end
+
+local function Load()
+	ServiceConnections.RenderSteppedConnection = RunService.RenderStepped:Connect(function()
+		if Aimbot.Settings.Enabled then
+			Aimbot.FOVCircle.Visible = Aimbot.FOVSettings.Visible
+			Aimbot.FOVCircle.Position = Vector2.new(UserInputService:GetMouseLocation().X, UserInputService:GetMouseLocation().Y)
+			Aimbot.FOVCircle.Radius = Aimbot.FOVSettings.Amount
+			Aimbot.FOVCircle.Color = Aimbot.FOVSettings.Color
+			if Running then
+				GetClosestPlayer()
+				AimAtTarget()
+			end
+		end
+	end)
+
+	ServiceConnections.InputBeganConnection = UserInputService.InputBegan:Connect(function(Input)
+		if Input.UserInputType == Enum.UserInputType[Aimbot.Settings.TriggerKey] then
+			Running = true
+		end
+	end)
+
+	ServiceConnections.InputEndedConnection = UserInputService.InputEnded:Connect(function(Input)
+		if Input.UserInputType == Enum.UserInputType[Aimbot.Settings.TriggerKey] then
+			Running = false
+			CancelLock()
+		end
+	end)
+end
+
+Load()
+
+sections.Aimbot:AddToggle({text = "Enabled", flag = "aimbot_enable", callback = function(val) Aimbot.Settings.Enabled = val end})
+sections.Aimbot:AddToggle({text = "Alive Check", flag = "aim_alivecheck", callback = function(val) Aimbot.Settings.AliveCheck = val end})
+sections.Aimbot:AddToggle({text = "FOV Visible", flag = "aim_fovvis", callback = function(val) Aimbot.FOVSettings.Visible = val end})
+
+sections.Aimbot:AddSlider({
+	text = "Aimbot Sensitivity", 
+	flag = 'aimbot_sensitivity', 
+	suffix = "", 
+	value = Aimbot.Settings.Sensitivity, 
+	min = 0.01, 
+	max = 1,
+	increment = 0.01,
+	tooltip = "How fast the aimbot aims",
+	risky = false,
+	callback = function(val) 
+		Aimbot.Settings.Sensitivity = val
+	end
+})
+
+sections.Aimbot:AddSlider({
+	text = "Prediction Factor", 
+	flag = 'aimbot_prediction', 
+	suffix = "", 
+	value = Aimbot.Settings.PredictionFactor, 
+	min = 0.1, 
+	max = 1,
+	increment = 0.001,
+	tooltip = "Predicts target movement",
+	risky = false,
+	callback = function(val) 
+		Aimbot.Settings.PredictionFactor = val
+	end
+})
+sections.Aimbot:AddSlider({
+	text = "FOV Radius", 
+	flag = 'aim_fov_amount', 
+	suffix = "", 
+	value = Aimbot.FOVSettings.Amount, 
+	min = 10, 
+	max = 500,
+	increment = 1,
+	tooltip = "FOV size in pixels",
+	risky = false,
+	callback = function(val) 
+		Aimbot.FOVSettings.Amount = val
+	end
+})
+
+sections.Aimbot:AddList({
+	text = "Lock On Part", 
+	flag = "aim_lockpart",
+	multi = false,
+	tooltip = "Where the aimbot locks on",
+	risky = false,
+	value = Aimbot.Settings.LockPart,
+	values = {
+		"Head",
+		"Torso",
+		"HumanoidRootPart"
+	},
+	callback = function(val)
+		Aimbot.Settings.LockPart = val
+	end
+})
+
+local player = game:GetService("Players").LocalPlayer
+local mouse = player:GetMouse()
+local RunService = game:GetService("RunService")
+
+-- 🔫 TriggerBot Variables
+local trigger_enabled = false
+local trigger_hitchance = 85
+local trigger_delay = 0.1
+
+-- 🧠 TriggerBot Logic com hitchance e delay
+RunService.RenderStepped:Connect(function()
+	if trigger_enabled and mouse.Target and mouse.Target.Parent then
+		local humanoid = mouse.Target.Parent:FindFirstChild("Humanoid")
+		if humanoid and mouse.Target.Parent.Name ~= player.Name then
+			if math.random(1, 100) <= trigger_hitchance then
+				task.wait(trigger_delay)
+				mouse1press()
+				task.wait(0.05)
+				mouse1release()
+			end
+		end
+	end
+end)
+
+sections.Section2:AddToggle({
+	text = "TriggerBot",
+	flag = "trigger_toggle",
+	callback = function(state)
+		trigger_enabled = state
+		library:SendNotification("TriggerBot " .. (state and "enabled" or "Disabled"), 3, state and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(255, 0, 0))
+	end
+})
+
+sections.Section2:AddSlider({
+	text = "Trigger Hitchance",
+	flag = "trigger_hitchance",
+	value = 85,
+	min = 1,
+	max = 100,
+	decimals = 0,
+	callback = function(val)
+		trigger_hitchance = val
+	end
+})
+
+sections.Section2:AddSlider({
+	text = "Trigger Delay ⏱",
+	flag = "trigger_delay",
+	value = 0.1,
+	min = 0.1,
+	max = 1,
+	decimals = 2,
+	callback = function(val)
+		trigger_delay = val
+	end
+})
