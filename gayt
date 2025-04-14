@@ -1,0 +1,793 @@
+getgenv().Config = {
+	Invite = "Skidding.cc | Xertion",
+	Version = "1.1",
+}
+
+getgenv().luaguardvars = {
+	DiscordName = "username#0000",
+}
+
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/drillygzzly/Other/main/1"))()
+library:init()
+
+getgenv().ESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/stackkkkkkkkkkkkkkkkkks/aaaaa/refs/heads/main/gyat", true))()
+ESP:Load()
+
+local Window = library.NewWindow({
+	title = "Skidding.cc | Xertion",
+	size = UDim2.new(0, 525, 0, 650)
+})
+
+local tabs = {
+	ESP = Window:AddTab("Visual"),
+    Tab2 = Window:AddTab("Aimbot"),
+    Tab3 = Window:AddTab("Exploit"),
+	Settings = library:CreateSettingsTab(Window),
+}
+
+local sections = {
+	Section1 = tabs.ESP:AddSection("Visual", 1),
+	Section4 = tabs.Tab3:AddSection("Teleport", 2),
+    Aimbot = tabs.Tab2:AddSection("Aimbot", 1),
+	Section3 = tabs.Tab3:AddSection("Exploit", 1)
+
+}
+
+sections.Section1:AddToggle({
+	enabled = true,
+	text = "enabled",
+	flag = "Toggle_1",
+	tooltip = "",
+	risky = true, -- turns text to red and sets label to risky
+	callback = function(val)
+		getgenv().ESP.options.enabled = val
+	end
+})
+
+sections.Section1:AddToggle({
+	enabled = true,
+	text = "boxes",
+	flag = "Toggle_1",
+	tooltip = "",
+	risky = true, -- turns text to red and sets label to risky
+	callback = function(val)
+		getgenv().ESP.options.boxes = val
+	end
+})
+
+sections.Section1:AddToggle({
+	enabled = true,
+	text = "boxFill",
+	flag = "Toggle_1",
+	tooltip = "",
+	risky = true, -- turns text to red and sets label to risky
+	callback = function(val)
+		getgenv().ESP.options.boxFill = val
+	end
+})
+
+sections.Section1:AddToggle({
+	enabled = true,
+	text = "Chams",
+	flag = "Toggle_1",
+	tooltip = "",
+	risky = true, -- turns text to red and sets label to risky
+	callback = function(val)
+		getgenv().ESP.options.chams = val
+	end
+})
+
+sections.Section1:AddToggle({
+	enabled = true,
+	text = "outOfViewArrows",
+	flag = "Toggle_1",
+	tooltip = "",
+	risky = true, -- turns text to red and sets label to risky
+	callback = function(val)
+		getgenv().ESP.options.outOfViewArrows = val
+	end
+})
+
+sections.Section1:AddToggle({
+	enabled = true,
+	text = "tracers",
+	flag = "",
+	tooltip = "",
+	risky = true, -- turns text to red and sets label to risky
+	callback = function(val)
+		getgenv().ESP.options.tracers = val
+	end
+})
+
+
+sections.Section1:AddToggle({
+	enabled = true,
+	text = "names",
+	flag = "Toggle_1",
+	tooltip = "",
+	risky = true, -- turns text to red and sets label to risky
+	callback = function(val)
+		getgenv().ESP.options.names = val
+	end
+})
+
+
+
+sections.Section1:AddToggle({
+	enabled = true,
+	text = "healthBars",
+	flag = "Toggle_1",
+	tooltip = "",
+	risky = true, -- turns text to red and sets label to risky
+	callback = function(val)
+		getgenv().ESP.options.healthBars = val
+	end
+})
+
+sections.Section1:AddToggle({
+	enabled = true,
+	text = "healthText",
+	flag = "",
+	tooltip = "",
+	risky = true, -- turns text to red and sets label to risky
+	callback = function(val)
+		getgenv().ESP.options.healthText = val
+	end
+})
+
+sections.Section1:AddToggle({
+	enabled = true,
+	text = "distance",
+	flag = "",
+	tooltip = "",
+	risky = true, -- turns text to red and sets label to risky
+	callback = function(val)
+		getgenv().ESP.options.distance = val
+	end
+})
+
+sections.Section1:AddToggle({
+	enabled = true,
+	text = "visibleOnly",
+	flag = "",
+	tooltip = "",
+	risky = true, -- turns text to red and sets label to risky
+	callback = function(val)
+		getgenv().ESP.options.visibleOnly = val
+	end
+})
+
+sections.Section1:AddToggle({
+	enabled = true,
+	text = "teamCheck (just use it for zombie mode",
+	flag = "",
+	tooltip = "",
+	risky = true, -- turns text to red and sets label to risky
+	callback = function(val)
+		getgenv().ESP.options.teamCheck = val
+	end
+})
+
+sections.Section1:AddColor({
+	text = "Name Color",
+	flag = "esp_color",
+	tooltip = "",
+	color = Color3.fromRGB(255, 255, 255),
+	callback = function(color)
+		ESP.options.nameColor = color
+	end
+})
+
+sections.Section1:AddColor({
+	text = "Box Color",
+	flag = "esp_color",
+	tooltip = "",
+	color = Color3.fromRGB(255, 255, 255),
+	callback = function(color)
+		ESP.options.boxesColor = color
+	end
+})
+
+sections.Section1:AddColor({
+	text = "FillBox Color",
+	flag = "esp_color",
+	tooltip = "",
+	color = Color3.fromRGB(255, 255, 255),
+	callback = function(color)
+		ESP.options.boxFillColor = color
+	end
+})
+
+sections.Section1:AddColor({
+	text = "distance Color",
+	flag = "esp_color",
+	tooltip = "",
+	color = Color3.fromRGB(255, 255, 255),
+	callback = function(color)
+		ESP.options.distanceColor = color
+	end
+})
+
+sections.Section1:AddColor({
+	text = "Tracer Color",
+	flag = "esp_color",
+	tooltip = "",
+	color = Color3.fromRGB(255, 255, 255),
+	callback = function(color)
+		ESP.options.tracerColor = color
+	end
+})
+
+sections.Section1:AddColor({
+	text = "Chams-fill Color",
+	flag = "esp_color",
+	tooltip = "",
+	color = Color3.fromRGB(255, 255, 255),
+	callback = function(color)
+		ESP.options.chamsFillColor = color
+	end
+})
+
+sections.Section1:AddSlider({
+	text = "Font Size",
+	flag = 'esp_fontsize',
+	value = 13,
+	min = 8,
+	max = 20,
+	increment = 1,
+	tooltip = "",
+	callback = function(val)
+		getgenv().ESP.options.fontSize = val
+	end
+})
+sections.Section1:AddToggle({
+	enabled = true,
+	text = "outOfViewArrowsOutline",
+	flag = "Toggle_1",
+	tooltip = "",
+	risky = true, -- turns text to red and sets label to risky
+	callback = function(val)
+		getgenv().ESP.options.outOfViewArrowsOutline = val
+	end
+})
+
+sections.Section1:AddSlider({
+	text = "outOfViewArrowsSize",
+	flag = 'outOfViewArrowsSize',
+	value = 25,
+	min = 10,
+	max = 25,
+	increment = 1,
+	tooltip = "",
+	callback = function(val)
+		getgenv().ESP.options.outOfViewArrowsSize = val
+	end
+})
+
+local Vector2 = Vector2
+local mousemoverel = mousemoverel or (Input and Input.MouseMove)
+local Aimbot = {}
+getgenv().Aimbot = Aimbot
+
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local TweenService = game:GetService("TweenService")
+local Players = game:GetService("Players")
+local Camera = workspace.CurrentCamera
+local LocalPlayer = Players.LocalPlayer
+
+local RequiredDistance, Typing, Running, Animation, ServiceConnections = 2000, false, false, nil, {}
+
+Aimbot.Settings = {
+    Enabled = false,
+    TeamCheck = false,
+    AliveCheck = false,
+    WallCheck = false,
+    Sensitivity = 0,
+    ThirdPerson = false,
+    ThirdPersonSensitivity = 3,
+    TriggerKey = "MouseButton2",
+    Toggle = false,
+    LockPart = "Head",
+    PredictionFactor = 0
+}
+
+Aimbot.FOVSettings = {
+    Enabled = true,
+    Visible = true,
+    Amount = 50,
+    Color = Color3.fromRGB(255, 255, 255),
+    LockedColor = Color3.fromRGB(255, 70, 70),
+    Transparency = 0.5,
+    Sides = 60,
+    Thickness = 1,
+    Filled = false
+}
+
+Aimbot.FOVCircle = Drawing.new("Circle")
+Aimbot.FOVCircle.Transparency = 0.5
+Aimbot.FOVCircle.Visible = true
+Aimbot.FOVCircle.Thickness = 1
+Aimbot.FOVCircle.Filled = false
+
+local function CancelLock()
+	Aimbot.Locked = nil
+	if Animation then Animation:Cancel() end
+	Aimbot.FOVCircle.Color = Aimbot.FOVSettings.Color
+end
+
+local function PredictTargetPosition(target)
+	local head = target.Character:FindFirstChild(Aimbot.Settings.LockPart)
+	local root = target.Character:FindFirstChild("HumanoidRootPart")
+	if head and root then
+		local velocity = root.Velocity
+		local predictedPos = head.Position + (velocity * Aimbot.Settings.PredictionFactor / 10)
+		return predictedPos
+	end
+end
+
+local function GetClosestPlayer()
+	if not Aimbot.Locked then
+		RequiredDistance = Aimbot.FOVSettings.Amount
+		for _, v in next, Players:GetPlayers() do
+			if v ~= LocalPlayer and v.Character and v.Character:FindFirstChild(Aimbot.Settings.LockPart) then
+				local humanoid = v.Character:FindFirstChildOfClass("Humanoid")
+				if not humanoid or humanoid.Health <= 0 then continue end
+				if Aimbot.Settings.TeamCheck and v.Team == LocalPlayer.Team then continue end
+				if Aimbot.Settings.WallCheck and #(Camera:GetPartsObscuringTarget({v.Character[Aimbot.Settings.LockPart].Position}, v.Character:GetDescendants())) > 0 then continue end
+				local predictedPos = PredictTargetPosition(v)
+				if predictedPos then
+					local Vector, OnScreen = Camera:WorldToViewportPoint(predictedPos)
+					local Distance = (Vector2.new(UserInputService:GetMouseLocation().X, UserInputService:GetMouseLocation().Y) - Vector2.new(Vector.X, Vector.Y)).Magnitude
+					if Distance < RequiredDistance and OnScreen then
+						RequiredDistance = Distance
+						Aimbot.Locked = v
+					end
+				end
+			end
+		end
+	else
+		local predictedPos = PredictTargetPosition(Aimbot.Locked)
+		if not predictedPos then return end
+		local screenPos = Camera:WorldToViewportPoint(predictedPos)
+		if (Vector2.new(UserInputService:GetMouseLocation().X, UserInputService:GetMouseLocation().Y) - Vector2.new(screenPos.X, screenPos.Y)).Magnitude > RequiredDistance then
+			CancelLock()
+		end
+	end
+end
+
+local function AimAtTarget()
+	if Aimbot.Locked and Aimbot.Locked.Character then
+		local predictedPos = PredictTargetPosition(Aimbot.Locked)
+		if not predictedPos then return end
+		if Aimbot.Settings.ThirdPerson then
+			local Vector = Camera:WorldToViewportPoint(predictedPos)
+			mousemoverel((Vector.X - UserInputService:GetMouseLocation().X) * Aimbot.Settings.ThirdPersonSensitivity,
+				(Vector.Y - UserInputService:GetMouseLocation().Y) * Aimbot.Settings.ThirdPersonSensitivity)
+		else
+			if Aimbot.Settings.Sensitivity > 0 then
+				Animation = TweenService:Create(Camera, TweenInfo.new(Aimbot.Settings.Sensitivity, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {CFrame = CFrame.new(Camera.CFrame.Position, predictedPos)})
+				Animation:Play()
+			else
+				Camera.CFrame = CFrame.new(Camera.CFrame.Position, predictedPos)
+			end
+		end
+		Aimbot.FOVCircle.Color = Aimbot.FOVSettings.LockedColor
+	end
+end
+
+local function Load()
+	ServiceConnections.RenderSteppedConnection = RunService.RenderStepped:Connect(function()
+		if Aimbot.Settings.Enabled then
+			Aimbot.FOVCircle.Visible = Aimbot.FOVSettings.Visible
+			Aimbot.FOVCircle.Position = Vector2.new(UserInputService:GetMouseLocation().X, UserInputService:GetMouseLocation().Y)
+			Aimbot.FOVCircle.Radius = Aimbot.FOVSettings.Amount
+			Aimbot.FOVCircle.Color = Aimbot.FOVSettings.Color
+			if Running then
+				GetClosestPlayer()
+				AimAtTarget()
+			end
+		end
+	end)
+
+	ServiceConnections.InputBeganConnection = UserInputService.InputBegan:Connect(function(Input)
+		if Input.UserInputType == Enum.UserInputType[Aimbot.Settings.TriggerKey] then
+			Running = true
+		end
+	end)
+
+	ServiceConnections.InputEndedConnection = UserInputService.InputEnded:Connect(function(Input)
+		if Input.UserInputType == Enum.UserInputType[Aimbot.Settings.TriggerKey] then
+			Running = false
+			CancelLock()
+		end
+	end)
+end
+
+Load()
+
+sections.Aimbot:AddToggle({text = "Enabled", flag = "aimbot_enable", callback = function(val) Aimbot.Settings.Enabled = val end})
+sections.Aimbot:AddToggle({text = "Alive Check", flag = "aim_alivecheck", callback = function(val) Aimbot.Settings.AliveCheck = val end})
+sections.Aimbot:AddToggle({text = "FOV Visible", flag = "aim_fovvis", callback = function(val) Aimbot.FOVSettings.Visible = val end})
+
+sections.Aimbot:AddSlider({
+	text = "Aimbot Sensitivity", 
+	flag = 'aimbot_sensitivity', 
+	suffix = "", 
+	value = Aimbot.Settings.Sensitivity, 
+	min = 0.01, 
+	max = 1,
+	increment = 0.01,
+	tooltip = "",
+	risky = false,
+	callback = function(val) 
+		Aimbot.Settings.Sensitivity = val
+	end
+})
+
+sections.Aimbot:AddSlider({
+	text = "Prediction Factor", 
+	flag = 'aimbot_prediction', 
+	suffix = "", 
+	value = Aimbot.Settings.PredictionFactor, 
+	min = 0.1, 
+	max = 1,
+	increment = 0.001,
+	tooltip = "",
+	risky = false,
+	callback = function(val) 
+		Aimbot.Settings.PredictionFactor = val
+	end
+})
+sections.Aimbot:AddSlider({
+	text = "FOV Radius", 
+	flag = 'aim_fov_amount', 
+	suffix = "", 
+	value = Aimbot.FOVSettings.Amount, 
+	min = 10, 
+	max = 500,
+	increment = 1,
+	tooltip = "",
+	risky = false,
+	callback = function(val) 
+		Aimbot.FOVSettings.Amount = val
+	end
+})
+
+sections.Aimbot:AddList({
+	text = "Lock On Part", 
+	flag = "aim_lockpart",
+	multi = false,
+	tooltip = "",
+	risky = false,
+	value = Aimbot.Settings.LockPart,
+	values = {
+		"Head",
+		"Torso",
+		"HumanoidRootPart"
+	},
+	callback = function(val)
+		Aimbot.Settings.LockPart = val
+	end
+})
+
+local player = game:GetService("Players").LocalPlayer
+local mouse = player:GetMouse()
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+local UIS = game:GetService("UserInputService")
+local plr = Players.LocalPlayer
+
+local fly_enabled = false
+local fly_speed = 50
+local fly_conn
+local flyGyro -- 👈 usado pra travar a rotação
+
+local keys = {
+	W = false,
+	A = false,
+	S = false,
+	D = false,
+	Space = false,
+	LeftControl = false
+}
+
+-- ✈️ FLY COM BODYGYRO (estabilizado)
+local function startFly()
+	local char = plr.Character or plr.CharacterAdded:Wait()
+	local hrp = char:WaitForChild("HumanoidRootPart")
+	local hum = char:WaitForChild("Humanoid")
+
+	hum.PlatformStand = true
+
+	-- 👑 BODYGYRO QUE MANTÉM O PLAYER RETO
+	flyGyro = Instance.new("BodyGyro")
+	flyGyro.MaxTorque = Vector3.new(100000, 100000, 100000)
+	flyGyro.P = 1000000
+	flyGyro.CFrame = workspace.CurrentCamera.CFrame
+	flyGyro.Parent = hrp
+
+	fly_conn = RunService.RenderStepped:Connect(function()
+		local move = Vector3.zero
+		local cam = workspace.CurrentCamera.CFrame
+
+		if keys.W then move += cam.LookVector end
+		if keys.S then move -= cam.LookVector end
+		if keys.A then move -= cam.RightVector end
+		if keys.D then move += cam.RightVector end
+		if keys.Space then move += cam.UpVector end
+		if keys.LeftControl then move -= cam.UpVector end
+
+		if move.Magnitude > 0 then
+			hrp.Velocity = move.Unit * fly_speed
+		else
+			hrp.Velocity = Vector3.zero
+		end
+
+		-- 🔒 Mantém rotação fixa baseada na câmera
+		if flyGyro then
+			flyGyro.CFrame = CFrame.new(hrp.Position, hrp.Position + cam.LookVector)
+		end
+	end)
+end
+
+local function stopFly()
+	local char = plr.Character
+	if not char then return end
+	local hum = char:FindFirstChild("Humanoid")
+	if hum then
+		hum.PlatformStand = false
+	end
+	if fly_conn then fly_conn:Disconnect() fly_conn = nil end
+	if flyGyro then flyGyro:Destroy() flyGyro = nil end
+end
+
+-- 🕹️ Input handling
+UIS.InputBegan:Connect(function(input, gpe)
+	if gpe then return end
+	if input.KeyCode == Enum.KeyCode.W then keys.W = true end
+	if input.KeyCode == Enum.KeyCode.A then keys.A = true end
+	if input.KeyCode == Enum.KeyCode.S then keys.S = true end
+	if input.KeyCode == Enum.KeyCode.D then keys.D = true end
+	if input.KeyCode == Enum.KeyCode.Space then keys.Space = true end
+	if input.KeyCode == Enum.KeyCode.LeftControl then keys.LeftControl = true end
+end)
+
+UIS.InputEnded:Connect(function(input)
+	if input.KeyCode == Enum.KeyCode.W then keys.W = false end
+	if input.KeyCode == Enum.KeyCode.A then keys.A = false end
+	if input.KeyCode == Enum.KeyCode.S then keys.S = false end
+	if input.KeyCode == Enum.KeyCode.D then keys.D = false end
+	if input.KeyCode == Enum.KeyCode.Space then keys.Space = false end
+	if input.KeyCode == Enum.KeyCode.LeftControl then keys.LeftControl = false end
+end)
+
+-- 🎛️ UI Fly Toggle
+sections.Section3:AddBind({
+	text = "Fly Keybind",
+	flag = "fly_keybind",
+	mode = "toggle",
+	bind = Enum.KeyCode.Q,
+	callback = function()
+		fly_enabled = not fly_enabled
+		if fly_enabled then startFly() else stopFly() end
+	end
+})
+
+sections.Section3:AddSlider({
+	text = "Fly Speed ",
+	flag = "fly_speed",
+	value = 50,
+	min = 10,
+	max = 50,
+	decimals = 0,
+	callback = function(val)
+		fly_speed = val
+	end
+})
+
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local UIS = game:GetService("UserInputService")
+local plr = Players.LocalPlayer
+
+local speed_enabled = false
+local speed_value = 0.1
+local speed_conn
+
+local keys = {
+	W = false,
+	A = false,
+	S = false,
+	D = false
+}
+
+local function startSpeed()
+	local char = plr.Character or plr.CharacterAdded:Wait()
+	local hrp = char:WaitForChild("HumanoidRootPart")
+
+	speed_conn = RunService.RenderStepped:Connect(function()
+		if not speed_enabled then return end
+		if not hrp then return end
+
+		local move = Vector3.zero
+		local cam = workspace.CurrentCamera.CFrame
+
+		if keys.W then move += cam.LookVector end
+		if keys.S then move -= cam.LookVector end
+		if keys.A then move -= cam.RightVector end
+		if keys.D then move += cam.RightVector end
+
+		if move.Magnitude > 0 then
+			hrp.CFrame = hrp.CFrame + move.Unit * speed_value
+		end
+	end)
+end
+
+local function stopSpeed()
+	if speed_conn then
+		speed_conn:Disconnect()
+		speed_conn = nil
+	end
+end
+
+UIS.InputBegan:Connect(function(input, gpe)
+	if gpe then return end
+	if input.KeyCode == Enum.KeyCode.W then keys.W = true end
+	if input.KeyCode == Enum.KeyCode.A then keys.A = true end
+	if input.KeyCode == Enum.KeyCode.S then keys.S = true end
+	if input.KeyCode == Enum.KeyCode.D then keys.D = true end
+end)
+
+UIS.InputEnded:Connect(function(input)
+	if input.KeyCode == Enum.KeyCode.W then keys.W = false end
+	if input.KeyCode == Enum.KeyCode.A then keys.A = false end
+	if input.KeyCode == Enum.KeyCode.S then keys.S = false end
+	if input.KeyCode == Enum.KeyCode.D then keys.D = false end
+end)
+
+sections.Section3:AddToggle({
+	text = "Speed Mode",
+	flag = "speed_toggle",
+	callback = function(state)
+		speed_enabled = state
+		if state then startSpeed() else stopSpeed() end
+	end
+})
+
+sections.Section3:AddSlider({
+	text = "Speed", 
+	flag = 'Slider_1', 
+	suffix = "", 
+	value = 0.01,
+	min = 0.1, 
+	max = 0.3,
+	increment = 0.1,
+	tooltip = "",
+	risky = false,
+	callback = function(val)
+		speed_value = val
+	end
+})
+
+
+sections.Section3:AddButton({
+	enabled = true,
+	text = "Fast pick",
+	flag = "Button_1",
+	tooltip = "",
+	risky = true,
+	confirm = false, -- shows confirm button
+	callback = function(v)
+	    local ProximityPromptService = game:GetService("ProximityPromptService")
+
+ProximityPromptService.PromptShown:Connect(function(prompt)
+	prompt.HoldDuration = 0.0
+end)
+
+ProximityPromptService.PromptTriggered:Connect(function(prompt, player)
+	if player == game.Players.LocalPlayer then
+		prompt:InputHoldBegin()
+		task.wait(0.0)
+		prompt:InputHoldEnd()
+	end
+end)
+	end
+})
+
+sections.Section4:AddButton({
+	enabled = true,
+	text = "Teleport Dealer",
+	flag = "Button_1",
+	tooltip = "",
+	risky = false,
+	confirm = false, -- shows confirm button
+	callback = function(v)
+	    local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+local dealer = workspace.Dealers.Dealer
+local part = dealer:FindFirstChildWhichIsA("BasePart")
+
+if part then
+	local offset = part.CFrame.LookVector * 5
+	local destination = part.Position + offset
+	character:MoveTo(destination)
+end
+	end
+})
+
+sections.Section4:AddButton({
+	enabled = true,
+	text = "Teleport dealer2",
+	flag = "Button_1",
+	tooltip = "",
+	risky = false,
+	confirm = false, -- shows confirm button
+	callback = function(v)
+	    local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+local dealer = workspace.Dealers.Dealer2
+local part = dealer:FindFirstChildWhichIsA("BasePart")
+
+if part then
+	local offset = part.CFrame.LookVector * 5
+	local destination = part.Position + offset
+	character:MoveTo(destination)
+end
+	end
+})
+
+sections.Section4:AddButton({
+	enabled = true,
+	text = "Teleport HoodedOne",
+	flag = "Button_1",
+	tooltip = "",
+	risky = false,
+	confirm = false, -- shows confirm button
+	callback = function(v)
+	    local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+local dealer = workspace.Dealers.HoodedOne
+local part = dealer:FindFirstChildWhichIsA("BasePart")
+
+if part then
+	local offset = part.CFrame.LookVector * 5
+	local destination = part.Position + offset
+	character:MoveTo(destination)
+end
+	end
+})
+
+sections.Section3:AddButton({
+	enabled = true,
+	text = "NoFall Damage",
+	flag = "Button_1",
+	tooltip = "=",
+	risky = false,
+	confirm = false, -- shows confirm button
+	callback = function(v)
+	    local workspace = game:GetService("Workspace")
+local runService = game:GetService("RunService")
+
+runService.Stepped:Connect(function()
+	local chars = workspace:FindFirstChild("Characters")
+	if chars then
+		for _, playerChar in pairs(chars:GetChildren()) do
+			local fallReg = playerChar:FindFirstChild("FallReg")
+			if fallReg then
+				local damage = fallReg:FindFirstChild("Damage")
+				if damage then
+					damage:Destroy()
+				end
+			end
+		end
+	end
+end)
+	end
+})
+
+library:SendNotification("Para de ser burro stack e coloca um codigo melhor macaco", 5, Color3.fromRGB(0, 255, 0))
