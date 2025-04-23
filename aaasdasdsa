@@ -4490,7 +4490,7 @@ function library:init()
         self.watermark = {
             objects = {};
             text = {
-                {"informant.wtf", true},
+                {"Skidding.cc", true},
                 {"V"..getgenv().Config.Version, true},
                 {getgenv().luaguardvars.DiscordName, true},
                 {'0 fps', true},
@@ -4623,8 +4623,7 @@ function library:CreateSettingsTab(menu)
     creditsSection:AddSeparator({text = 'Owners/Developers'});
     creditsSection:AddText({text = "Stack Lindão"})
     creditsSection:AddSeparator({text = 'Helpers'});
-    creditsSection:AddText({text = "k00zikidd"})
-    creditsSection:AddText({text = "ex0dus"})
+    creditsSection:AddText({text = "??"})
 
 
     configSection:AddBox({text = 'Config Name', flag = 'configinput'})
